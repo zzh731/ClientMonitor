@@ -71,6 +71,9 @@
 					<br>
 					<label>温度：[[${clientDetail.temperature}]]</label>
 					<br>
+					<label>FRP配置：</label>
+					<textarea>[[${clientDetail.frpConfig}]]</textarea>
+					<br>
 					<label>消息：[[${clientDetail.msg}]]</label>
 					<br>
 					<a class="btn btn-sm btn-primary" th:href="@{/client/ack/all/}+${clientDetail.id}">清除提醒</a>
