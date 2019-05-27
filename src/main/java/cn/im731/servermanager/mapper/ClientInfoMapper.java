@@ -36,7 +36,7 @@ public interface ClientInfoMapper {
     public int insertClientInfo(ClientInfo clientInfo);
 
     //Web页面修改
-    @Update("update client_info set name=#{name}, host_name=#{hostName}, descrb=#{descrb}, add_time=#{addTime}, ip_last=#{ipLast}")
+    @Update("update client_info set name=#{name}, host_name=#{hostName}, descrb=#{descrb}, add_time=#{addTime}, ip_last=#{ipLast} where id=#{id}")
 //    @Update("update client_info set name=#{name}, host_name=#{hostName}, descrb=#{descrb}, add_time=#{addTime}, ip_last=#{ip} where id=#{id}")
     public int updateClientInfo(ClientInfo clientInfo);
 

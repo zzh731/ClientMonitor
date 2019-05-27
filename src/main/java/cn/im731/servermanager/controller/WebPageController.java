@@ -40,7 +40,15 @@ public class WebPageController {
 
     //client添加操作
     @PostMapping("/client")
-    public String addServer(ClientInfo clientInfo) {
+    public String addServer(ClientInfo clientInfo, Model model) {
+        //0.先检查ClientInfo中hostName是否已经存在！
+        ClientInfo c = clientInfoMapper.getClientInfoByHostName(clientInfo.getHostName());
+        if (c != null) {
+            System.out.println("主机HostName "+clientInfo.getHostName()+"已存在！");
+            model.addAttribute("msg", "主机HostName "+clientInfo.getHostName()+"已存在！");
+            return "redirect:/clients";//实际不会显示msg，因为是redirect
+        }
+
         //1.先存clientInfo
         System.out.println("1.要保存的clientInfo:"+clientInfo);
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -56,7 +64,8 @@ public class WebPageController {
         //3.再存Status
         clientStatusMapper.insertClientStatus(clientStatus);
         System.out.println("2.要保存的clientStatus:"+clientStatus);
-        return "redirect:/clients";
+        model.addAttribute("msg", "添加成功！");
+        return "redirect:/clients";//实际不会显示msg，因为是redirect
     }
 
     //去server修改页面
@@ -70,8 +79,17 @@ public class WebPageController {
         return "client/add";
     }
 
+
+    @ModelAttribute
+    public void getClientInfo(@RequestParam(value = "id", required = false) Integer id, Model model) {
+        if (id != null) {
+            ClientInfo clientInfo = clientInfoMapper.getClientInfoById(id);
+            System.out.println("ModelAttribute获取一个ClientInfo"+clientInfo);
+            model.addAttribute("clientInfo", clientInfo);
+        }
+    }
+
     //client修改操作
-    /////////////////////////////需要ModelAttribute，否则会有问题
     @PutMapping("/client")
     public String editServer(ClientInfo clientInfo) {
         System.out.println("要修改的client:"+clientInfo);
