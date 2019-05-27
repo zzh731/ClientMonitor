@@ -1,12 +1,15 @@
 package cn.im731.servermanager.controller;
 
 import cn.im731.servermanager.bean.ClientInfo;
+import cn.im731.servermanager.bean.ClientReportResponse;
 import cn.im731.servermanager.bean.ClientStatus;
 import cn.im731.servermanager.mapper.ClientInfoMapper;
 import cn.im731.servermanager.mapper.ClientStatusMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -58,7 +61,8 @@ public class ClientReportController {
     //Client根据id上报数据
     @ResponseBody
     @RequestMapping("/client/report")
-    public String updateDataFromClient(ClientStatus clientStatus) {
+//    @PostMapping("/client/report")
+    public String updateDataFromClient(ClientStatus clientStatus) throws Exception{
         //获取时间
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timeString = simpleDateFormat.format(new Date()).toString();
@@ -67,6 +71,11 @@ public class ClientReportController {
         System.out.println("收到Client上报："+clientStatus);
 
         clientStatusMapper.updateClientStatus(clientStatus);
+
+//        ClientReportResponse clientReportResponse = new ClientReportResponse(1,"OK","report has accepted");
+//        ObjectMapper mapper = new ObjectMapper();
+//        String responseJsonString = mapper.writeValueAsString(clientReportResponse);
+//        return responseJsonString;
         return "OK";
     }
 }
