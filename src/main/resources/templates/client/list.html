@@ -77,7 +77,7 @@
 									<td>[[${clientDetail.hostName}]]</td>
 									<td>
 										[[${clientDetail.ipNow}]]
-										<p th:if="${clientDetail.ipNow != null && clientDetail.ipLast != null && clientDetail.ipNow != clientDetail.ipLast}">IP地址有变化！
+										<p th:if="${(clientDetail.ipLast == null && clientDetail.ipNow != null)||(clientDetail.ipNow != null && clientDetail.ipLast != null && clientDetail.ipNow != clientDetail.ipLast)}">IP地址有变化！
 											<a class="btn btn-sm btn-primary" th:href="@{/client/ack/ip/}+${clientDetail.id}">知道了</a>
 										</p>
 									</td>

@@ -20,6 +20,9 @@ public interface ClientStatusMapper {
     @Insert("insert into client_status(id, ip_now, last_report_time, frp_config, temperature, msg) values(#{id}, #{ipNow}, #{lastReportTime}, #{frpConfig} , #{temperature} , #{msg})")
     public int insertClientStatus(ClientStatus clientStatus);
 
+    @Update("update client_status set ip_now=#{ipNow}, last_report_time=#{lastReportTime}, frp_config=#{frpConfig}, temperature=#{temperature}, msg=#{msg} where id=#{id}")
+    public int updateClientStatus(ClientStatus clientStatus);
+
     //ACK for msg
     @Update("update client_status set msg=null where id=#{id}")
     public int clientMsgAck(Integer id);
